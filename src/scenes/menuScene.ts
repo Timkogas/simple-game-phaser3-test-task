@@ -1,7 +1,7 @@
 export default class menuScene extends Phaser.Scene {
-  private title: any
-  private playButton: any
-  private info: any
+  private title: Phaser.GameObjects.Text
+  private playButton: Phaser.GameObjects.Text
+  private info: Phaser.GameObjects.Text
 
   constructor() {
     super('menuScene')

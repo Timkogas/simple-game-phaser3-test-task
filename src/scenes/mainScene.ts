@@ -1,12 +1,12 @@
 export default class mainScene extends Phaser.Scene {
-  private player: any
-  private stars: any
-  private bombs: any
-  private platforms: any
-  private cursors: any
-  private bullets: any
+  private player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+  private stars: Phaser.Physics.Arcade.Group
+  private bombs: Phaser.Physics.Arcade.Group
+  private platforms: Phaser.Physics.Arcade.StaticGroup
+  private cursors: Phaser.Types.Input.Keyboard.CursorKeys
+  private bullets: Phaser.Physics.Arcade.Group
   private score: number
-  private scoreText: any
+  private scoreText: Phaser.GameObjects.Text
 
   constructor() {
     super('mainScene')
@@ -79,7 +79,7 @@ export default class mainScene extends Phaser.Scene {
     this.bullets = this.physics.add.group();
 
 
-    this.stars.children.iterate(function (child: any) {
+    this.stars.children.iterate(function (child: Phaser.Physics.Arcade.Sprite) {
 
       //  Give each star a slightly different bounce
       child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
@@ -144,16 +144,16 @@ export default class mainScene extends Phaser.Scene {
     }
   }
 
-  destroyBulletByPlatform(platform: any, bullet: any) {
+  destroyBulletByPlatform(platform: Phaser.Physics.Arcade.Sprite, bullet: Phaser.Physics.Arcade.Sprite) {
     bullet.disableBody(true, true)
   }
 
-  destroyBombByBullet(bomb: any, bullet: any) {
+  destroyBombByBullet(bomb: Phaser.Physics.Arcade.Sprite, bullet: Phaser.Physics.Arcade.Sprite) {
     bomb.disableBody(true, true)
     bullet.disableBody(true, true)
   }
 
-  collectStar(player: any, star: any) {
+  collectStar(player: Phaser.Physics.Arcade.Sprite, star: Phaser.Physics.Arcade.Sprite) {
     star.disableBody(true, true);
 
     this.score += 10;
@@ -168,7 +168,7 @@ export default class mainScene extends Phaser.Scene {
 
     if (this.stars.countActive(true) === 0) {
       //  A new batch of this.stars to collect
-      this.stars.children.iterate(function (child: any) {
+      this.stars.children.iterate(function (child: Phaser.Physics.Arcade.Sprite) {
 
         child.enableBody(true, child.x, 0, true, true);
 
@@ -178,7 +178,7 @@ export default class mainScene extends Phaser.Scene {
     }
   }
 
-  hitBomb(player: any, bomb: any) {
+  hitBomb(player: Phaser.Physics.Arcade.Sprite, bomb: Phaser.Physics.Arcade.Sprite) {
     this.physics.pause();
     player.setTint(0xff0000);
     player.anims.play('turn');
