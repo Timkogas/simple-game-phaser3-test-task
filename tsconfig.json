@@ -12,5 +12,4 @@
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true,
   },
-  "include": ["src/**/*"]
 }
